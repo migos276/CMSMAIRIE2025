@@ -1,0 +1,161 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Soumettre une Réclamation | E-CMS{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Soumettre une Réclamation</h1>
+        <p class="text-gray-600 mb-8">Aidez-nous à améliorer nos services en signalant vos préoccupations</p>
+
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <form method="post" class="space-y-6" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Catégorie -->
+                <div>
+                    <label for="{{ form.categorie.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Catégorie de réclamation *
+                    </label>
+                    <select name="categorie" id="{{ form.categorie.id_for_label }}" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary" required>
+                        <option value="">-- Sélectionnez une catégorie --</option>
+                        {% for cat in categories_reclamation %}
+                        <option value="{{ cat.id }}">{{ cat.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.categorie.errors %}
+                    <span class="text-red-500 text-sm">{{ form.categorie.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Objet -->
+                <div>
+                    <label for="{{ form.objet.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Objet *
+                    </label>
+                    {{ form.objet }}
+                    {% if form.objet.errors %}
+                    <span class="text-red-500 text-sm">{{ form.objet.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Description détaillée *
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <span class="text-red-500 text-sm">{{ form.description.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Localisation -->
+                <div>
+                    <label for="{{ form.localisation.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Localisation
+                    </label>
+                    {{ form.localisation }}
+                    {% if form.localisation.errors %}
+                    <span class="text-red-500 text-sm">{{ form.localisation.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Pièce jointe -->
+                <div>
+                    <label for="{{ form.piece_jointe.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Pièce jointe (Photo/Document)
+                    </label>
+                    {{ form.piece_jointe }}
+                    {% if form.piece_jointe.errors %}
+                    <span class="text-red-500 text-sm">{{ form.piece_jointe.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Nom -->
+                <div>
+                    <label for="{{ form.nom.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nom *
+                    </label>
+                    {{ form.nom }}
+                    {% if form.nom.errors %}
+                    <span class="text-red-500 text-sm">{{ form.nom.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email *
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <span class="text-red-500 text-sm">{{ form.email.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Téléphone -->
+                <div>
+                    <label for="{{ form.telephone.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Téléphone
+                    </label>
+                    {{ form.telephone }}
+                    {% if form.telephone.errors %}
+                    <span class="text-red-500 text-sm">{{ form.telephone.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Bouton -->
+                <div class="flex gap-4">
+                    <button type="submit" class="flex-1 bg-accent text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Soumettre la réclamation
+                    </button>
+                    <a href="{% url 'services:index' %}" class="flex-1 bg-gray-300 text-gray-700 font-bold py-3 px-4 rounded-lg text-center hover:opacity-90 transition">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Retour
+                    </a>
+                </div>
+            </form>
+
+            <!-- Informations utiles -->
+            <div class="mt-8 p-4 bg-amber-50 rounded-lg">
+                <h3 class="font-bold text-amber-900 mb-2">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    Conseils pour votre réclamation
+                </h3>
+                <ul class="text-sm text-amber-800 space-y-1">
+                    <li>• Soyez précis et détaillé dans votre description</li>
+                    <li>• Si possible, joignez des photos ou documents</li>
+                    <li>• Un numéro de suivi vous sera fourni</li>
+                    <li>• Vous recevrez une réponse dans les 10 jours ouvrables</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Autres services -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-6">Autres services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="{% url 'services:prendre_rdv' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition text-center">
+                    <i class="fas fa-calendar-check text-2xl text-primary mb-2"></i>
+                    <h3 class="font-bold">Prendre un rendez-vous</h3>
+                    <p class="text-sm text-gray-600">Réserver un rendez-vous auprès des services</p>
+                </a>
+                <a href="{% url 'services:suivi_reclamation_form' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition text-center">
+                    <i class="fas fa-search text-2xl text-secondary mb-2"></i>
+                    <h3 class="font-bold">Suivre une réclamation</h3>
+                    <p class="text-sm text-gray-600">Consulter l'état de votre réclamation</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

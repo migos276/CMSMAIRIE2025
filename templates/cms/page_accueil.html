@@ -1,0 +1,50 @@
+{% extends "cms/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags cms_tags %}
+
+{% block content %}
+<!-- Improved hero section for homepage -->
+<section class="relative bg-gray-900 text-white min-h-[600px] flex items-center overflow-hidden">
+    {% if self.hero_image %}
+    {% image self.hero_image fill-1920x800 as hero_img %}
+    <div class="absolute inset-0">
+        <img src="{{ hero_img.url }}" alt="" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-gray-900/50"></div>
+    </div>
+    {% else %}
+    <div class="absolute inset-0 bg-gradient-to-br from-[--color-primary] via-[--color-primary]/90 to-[--color-secondary]"></div>
+    {% endif %}
+    
+    <!-- Decorative elements -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">{{ self.hero_titre }}</h1>
+            {% if self.hero_sous_titre %}
+            <p class="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl">{{ self.hero_sous_titre }}</p>
+            {% endif %}
+            
+            {% if self.hero_bouton_lien %}
+            <a href="{% pageurl self.hero_bouton_lien %}" 
+               class="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-lg transition transform hover:-translate-y-0.5 shadow-xl" style="background-color: var(--color-accent); color: #1f2937;">
+                {{ self.hero_bouton_texte }}
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Wave decoration -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Contenu StreamField -->
+{% for block in self.contenu %}
+    {% include_block block %}
+{% endfor %}
+{% endblock %}

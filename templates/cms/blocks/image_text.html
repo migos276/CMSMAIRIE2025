@@ -1,0 +1,23 @@
+{% load wagtailimages_tags wagtailcore_tags %}
+
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center gap-12 {% if value.position_image == 'right' %}lg:flex-row-reverse{% endif %}">
+            <!-- Image -->
+            <div class="{% if value.ratio == '60-40' %}lg:w-3/5{% elif value.ratio == '40-60' %}lg:w-2/5{% else %}lg:w-1/2{% endif %}">
+                {% image value.image fill-600x400 as img %}
+                <img src="{{ img.url }}" alt="{{ value.titre }}" class="w-full rounded-lg shadow-lg">
+            </div>
+            
+            <!-- Texte -->
+            <div class="{% if value.ratio == '60-40' %}lg:w-2/5{% elif value.ratio == '40-60' %}lg:w-3/5{% else %}lg:w-1/2{% endif %}">
+                {% if value.titre %}
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">{{ value.titre }}</h2>
+                {% endif %}
+                <div class="prose prose-lg">
+                    {{ value.texte|richtext }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

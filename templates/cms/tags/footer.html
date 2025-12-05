@@ -1,0 +1,127 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<!-- Modernized footer with better layout -->
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- Logo et description -->
+            <div class="lg:col-span-1">
+                <div class="flex items-center gap-3 mb-4">
+                    {% if config.logo %}
+                    {% image config.logo fill-150x50 as logo %}
+                    <img src="{{ logo.url }}" alt="{{ config.nom_mairie }}" class="h-12 w-auto">
+                    {% else %}
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background-color: var(--color-primary);">
+                        <i class="fas fa-city text-white text-xl"></i>
+                    </div>
+                    {% endif %}
+                    <span class="text-xl font-bold">{{ config.nom_mairie|default:"E-CMS" }}</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">{{ config.slogan|default:"Plateforme de gestion pour les collectivites locales" }}</p>
+                
+                <!-- Social links -->
+                <div class="flex gap-3 mt-6">
+                    {% if config.facebook %}
+                    <a href="{{ config.facebook }}" target="_blank" rel="noopener" 
+                       class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[--color-primary] transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    {% endif %}
+                    {% if config.twitter %}
+                    <a href="{{ config.twitter }}" target="_blank" rel="noopener"
+                       class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[--color-primary] transition">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    {% endif %}
+                    {% if config.instagram %}
+                    <a href="{{ config.instagram }}" target="_blank" rel="noopener"
+                       class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[--color-primary] transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    {% endif %}
+                    {% if config.youtube %}
+                    <a href="{{ config.youtube }}" target="_blank" rel="noopener"
+                       class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[--color-primary] transition">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h3 class="text-lg font-bold mb-6 relative inline-block">
+                    Contact
+                    <span class="absolute -bottom-2 left-0 w-12 h-1 rounded-full" style="background-color: var(--color-primary);"></span>
+                </h3>
+                <ul class="space-y-4">
+                    {% if config.adresse %}
+                    <li class="flex items-start gap-3 text-gray-400">
+                        <i class="fas fa-map-marker-alt mt-1" style="color: var(--color-accent);"></i>
+                        <span>{{ config.adresse|linebreaksbr }}</span>
+                    </li>
+                    {% endif %}
+                    {% if config.telephone %}
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-phone" style="color: var(--color-accent);"></i>
+                        <a href="tel:{{ config.telephone }}" class="text-gray-400 hover:text-white transition">{{ config.telephone }}</a>
+                    </li>
+                    {% endif %}
+                    {% if config.email %}
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-envelope" style="color: var(--color-accent);"></i>
+                        <a href="mailto:{{ config.email }}" class="text-gray-400 hover:text-white transition">{{ config.email }}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+            <!-- Horaires -->
+            <div>
+                <h3 class="text-lg font-bold mb-6 relative inline-block">
+                    Horaires
+                    <span class="absolute -bottom-2 left-0 w-12 h-1 rounded-full" style="background-color: var(--color-primary);"></span>
+                </h3>
+                <div class="text-gray-400 space-y-2">
+                    {{ config.horaires|default:"<p>Lundi - Vendredi</p><p>8h00 - 16h00</p>"|safe }}
+                </div>
+            </div>
+            
+            <!-- Liens rapides -->
+            <div>
+                <h3 class="text-lg font-bold mb-6 relative inline-block">
+                    Liens Rapides
+                    <span class="absolute -bottom-2 left-0 w-12 h-1 rounded-full" style="background-color: var(--color-primary);"></span>
+                </h3>
+                <ul class="space-y-3">
+                    <li><a href="/cms-admin/" class="text-gray-400 hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs" style="color: var(--color-accent);"></i> Espace Admin</a></li>
+                    <li><a href="/etat-civil/" class="text-gray-400 hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs" style="color: var(--color-accent);"></i> Etat Civil</a></li>
+                    <li><a href="/services/" class="text-gray-400 hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs" style="color: var(--color-accent);"></i> Services</a></li>
+                    <li><a href="/contenu/articles/" class="text-gray-400 hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs" style="color: var(--color-accent);"></i> Actualites</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Partenaires -->
+        {% if partenaires %}
+        <div class="mt-16 pt-8 border-t border-gray-800">
+            <h3 class="text-center text-lg font-bold mb-8">Nos Partenaires</h3>
+            <div class="flex flex-wrap justify-center items-center gap-8">
+                {% for partenaire in partenaires %}
+                <a href="{{ partenaire.site_web }}" target="_blank" rel="noopener" 
+                   class="opacity-50 hover:opacity-100 transition grayscale hover:grayscale-0">
+                    {% image partenaire.logo fill-120x60 as partner_logo %}
+                    <img src="{{ partner_logo.url }}" alt="{{ partenaire.nom }}" class="h-12 w-auto">
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Copyright -->
+        <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 text-sm">&copy; {% now "Y" %} {{ config.nom_mairie|default:"E-CMS" }}. Tous droits reserves.</p>
+            <p class="text-gray-500 text-sm">Propulse par <a href="#" class="hover:text-white transition" style="color: var(--color-accent);">Hubmairie by ARITED</a></p>
+        </div>
+    </div>
+</footer>

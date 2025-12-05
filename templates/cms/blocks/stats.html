@@ -1,0 +1,32 @@
+{% load wagtailcore_tags %}
+
+<!-- Redesigned stats section with better visual hierarchy -->
+<section class="py-20 {% if value.style == 'dark' %}bg-gray-900 text-white{% elif value.style == 'primary' %}text-white{% else %}bg-white{% endif %}" {% if value.style == 'primary' %}style="background-color: var(--color-primary);"{% endif %}>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if value.titre_section %}
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4">{{ value.titre_section }}</h2>
+            {% if value.sous_titre %}
+            <p class="text-lg {% if value.style == 'light' %}text-gray-600{% else %}opacity-80{% endif %} max-w-2xl mx-auto">{{ value.sous_titre }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {% for stat in value.statistiques %}
+            <div class="text-center group">
+                {% if stat.icone %}
+                <div class="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 {% if value.style == 'light' %}bg-gray-100{% else %}bg-white/10{% endif %}">
+                    <i class="fas fa-{{ stat.icone }} text-2xl {% if value.style == 'light' %}text-[--color-primary]{% endif %}"></i>
+                </div>
+                {% endif %}
+                <div class="text-4xl lg:text-5xl font-bold mb-2">{{ stat.valeur }}</div>
+                <div class="text-lg font-semibold {% if value.style == 'light' %}text-gray-900{% endif %}">{{ stat.label }}</div>
+                {% if stat.description %}
+                <p class="text-sm mt-2 {% if value.style == 'light' %}text-gray-500{% else %}opacity-70{% endif %}">{{ stat.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

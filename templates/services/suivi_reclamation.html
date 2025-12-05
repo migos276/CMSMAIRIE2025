@@ -1,0 +1,104 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Suivi de Réclamation{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Suivi de Réclamation</h1>
+
+    <div class="max-w-2xl">
+        <form method="get" class="mb-8">
+            <div class="flex gap-2">
+                <input type="text" name="numero" placeholder="Numéro de réclamation" class="flex-1 border rounded px-3 py-2">
+                <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:opacity-90">
+                    Rechercher
+                </button>
+            </div>
+        </form>
+
+        {% if reclamation %}
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <div class="border-b-2 pb-4 mb-4">
+                <h2 class="text-2xl font-bold">{{ reclamation.titre }}</h2>
+                <p class="text-gray-600">Réclamation #{{ reclamation.id }}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <p class="text-sm text-gray-600">Date de dépôt</p>
+                    <p class="text-lg font-medium">{{ reclamation.date_creation|date:"d/m/Y" }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Statut</p>
+                    <p class="text-lg font-medium">{{ reclamation.get_statut_display }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Catégorie</p>
+                    <p class="text-lg font-medium">{{ reclamation.categorie }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Priorité</p>
+                    <p class="text-lg font-medium">{{ reclamation.get_priorite_display }}</p>
+                </div>
+            </div>
+
+            <div class="mb-6 pb-6 border-b">
+                <p class="text-sm text-gray-600 mb-2">Description</p>
+                <p class="text-gray-800">{{ reclamation.description }}</p>
+            </div>
+
+            <!-- Étapes de traitement -->
+            <div class="mb-6">
+                <h3 class="font-bold mb-4">Progression du traitement</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center mr-3">✓</div>
+                        <div>
+                            <p class="font-medium">Réclamation enregistrée</p>
+                            <p class="text-sm text-gray-600">{{ reclamation.date_creation|date:"d/m/Y à H:i" }}</p>
+                        </div>
+                    </div>
+
+                    {% if reclamation.statut != 'nouveau' %}
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center mr-3">✓</div>
+                        <div>
+                            <p class="font-medium">En cours de traitement</p>
+                            {% if reclamation.date_assignation %}<p class="text-sm text-gray-600">{{ reclamation.date_assignation|date:"d/m/Y" }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 mr-3"></div>
+                        <p class="text-gray-600">En attente de traitement</p>
+                    </div>
+                    {% endif %}
+
+                    {% if reclamation.statut == 'resolu' %}
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center mr-3">✓</div>
+                        <div>
+                            <p class="font-medium">Résolu</p>
+                            <p class="text-sm text-gray-600">{{ reclamation.date_resolution|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 mr-3"></div>
+                        <p class="text-gray-600">À traiter</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <a href="{% url 'services:suivi_reclamation_form' %}" class="text-primary hover:underline">← Retour</a>
+        </div>
+        {% else %}
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <p>Aucune réclamation trouvée. Veuillez vérifier le numéro.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

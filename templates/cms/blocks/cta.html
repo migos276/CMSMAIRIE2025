@@ -1,0 +1,33 @@
+{% load wagtailimages_tags wagtailcore_tags %}
+
+<!-- Modern CTA block with gradient and animations -->
+<section class="relative py-24 overflow-hidden {% if value.style == 'dark' %}bg-gray-900{% elif value.style == 'gradient' %}{% else %}bg-gray-100{% endif %}" {% if value.style == 'primary' %}style="background-color: var(--color-primary);"{% elif value.style == 'gradient' %}style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);"{% endif %}>
+    {% if value.image_fond %}
+    {% image value.image_fond fill-1920x600 as bg_img %}
+    <div class="absolute inset-0">
+        <img src="{{ bg_img.url }}" alt="" class="w-full h-full object-cover opacity-20">
+    </div>
+    {% endif %}
+    
+    <!-- Decorative elements -->
+    <div class="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+    
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center {% if value.style != 'light' %}text-white{% endif %}">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">{{ value.titre }}</h2>
+        
+        {% if value.description %}
+        <p class="text-xl {% if value.style == 'light' %}text-gray-600{% else %}opacity-90{% endif %} mb-10 max-w-2xl mx-auto leading-relaxed">{{ value.description }}</p>
+        {% endif %}
+        
+        {% if value.bouton %}
+        <a href="{% if value.bouton.page %}{% pageurl value.bouton.page %}{% else %}{{ value.bouton.url_externe }}{% endif %}"
+           class="inline-flex items-center gap-3 px-10 py-5 rounded-xl font-bold text-lg transition transform hover:-translate-y-1 shadow-2xl
+                  {% if value.style == 'light' %}text-white{% else %}text-gray-900{% endif %}"
+           {% if value.style == 'light' %}style="background-color: var(--color-primary);"{% else %}style="background-color: white;"{% endif %}>
+            {{ value.bouton.texte }}
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        {% endif %}
+    </div>
+</section>

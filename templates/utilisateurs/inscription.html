@@ -1,0 +1,81 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Inscription</h1>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 text-red-700">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Email -->
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium mb-1">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Prénom -->
+            <div>
+                <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium mb-1">Prénom</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.first_name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Nom -->
+            <div>
+                <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium mb-1">Nom</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.last_name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Mot de passe -->
+            <div>
+                <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium mb-1">Mot de passe</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.password1.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Confirmation mot de passe -->
+            <div>
+                <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium mb-1">Confirmer le mot de passe</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Bouton -->
+            <button type="submit" class="w-full bg-secondary text-white py-2 rounded hover:opacity-90 font-medium">
+                S'inscrire
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">
+                Vous avez déjà un compte ? 
+                <a href="{% url 'utilisateurs:connexion' %}" class="text-primary hover:underline">Connectez-vous</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

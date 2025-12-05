@@ -1,0 +1,24 @@
+# Development configuration - use with: docker-compose -f docker-compose.dev.yml up
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: e_cms_dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=dev-secret-key-not-for-production
+      - DB_ENGINE=django.db.backends.sqlite3
+      - DB_NAME=db.sqlite3
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    command: python manage.py runserver 0.0.0.0:8000
+
+volumes:
+  static_volume:
+  media_volume:

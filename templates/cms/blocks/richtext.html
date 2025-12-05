@@ -1,0 +1,15 @@
+{% load wagtailcore_tags %}
+
+<section class="py-8">
+    <div class="container mx-auto px-4">
+        {% if value.colonnes == '2' %}
+        <div class="columns-2 gap-8 prose prose-lg max-w-none">
+            {{ value.contenu|richtext }}
+        </div>
+        {% else %}
+        <div class="prose prose-lg max-w-4xl mx-auto">
+            {{ value.contenu|richtext }}
+        </div>
+        {% endif %}
+    </div>
+</section>

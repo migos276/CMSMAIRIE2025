@@ -1,0 +1,30 @@
+{% extends "cms/base.html" %}
+{% load static wagtailcore_tags %}
+
+{% block title %}{{ self.title }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <nav class="mb-6 text-gray-600">
+        <a href="{% url 'core:accueil' %}" class="hover:text-primary">Accueil</a>
+        {% if parent %}
+            > <a href="{{ parent.get_url }}" class="hover:text-primary">{{ parent.title }}</a>
+        {% endif %}
+        > <span class="text-gray-800">{{ self.title }}</span>
+    </nav>
+
+    <article class="bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-4xl font-bold mb-4">{{ self.title }}</h1>
+        
+        {% if self.seo_description %}
+        <p class="text-lg text-gray-600 mb-6 pb-6 border-b">{{ self.seo_description }}</p>
+        {% endif %}
+
+        {% if self.body %}
+        <div class="prose max-w-none">
+            {% include_block self.body %}
+        </div>
+        {% endif %}
+    </article>
+</div>
+{% endblock %}

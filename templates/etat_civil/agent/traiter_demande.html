@@ -1,0 +1,66 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Traiter une Demande{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Traiter la Demande</h1>
+
+    <div class="max-w-2xl">
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4">{{ demande.get_type_display }}</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 pb-4 border-b">
+                <div>
+                    <p class="text-sm text-gray-600">Demandeur</p>
+                    <p class="font-medium">{{ demande.demandeur.get_full_name }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Date de demande</p>
+                    <p class="font-medium">{{ demande.date_demande|date:"d/m/Y à H:i" }}</p>
+                </div>
+            </div>
+
+            <!-- Détails supplémentaires selon le type -->
+            <div class="mb-6">
+                <h3 class="font-bold mb-3">Informations de la demande</h3>
+                <!-- Les détails spécifiques seraient affichés ici -->
+                <p class="text-gray-600">Détails à compléter selon le type d'acte demandé...</p>
+            </div>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Statut</label>
+                    <select name="statut" required class="w-full border rounded px-3 py-2">
+                        <option value="en_attente" {% if demande.statut == 'en_attente' %}selected{% endif %}>En attente</option>
+                        <option value="en_cours" {% if demande.statut == 'en_cours' %}selected{% endif %}>En cours de traitement</option>
+                        <option value="pret" {% if demande.statut == 'pret' %}selected{% endif %}>Prêt pour retrait</option>
+                        <option value="remis" {% if demande.statut == 'remis' %}selected{% endif %}>Remis au demandeur</option>
+                        <option value="refuse" {% if demande.statut == 'refuse' %}selected{% endif %}>Refusée</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Notes / Observations</label>
+                    <textarea name="notes" rows="4" class="w-full border rounded px-3 py-2" placeholder="Ajouter vos observations..."></textarea>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="submit" name="action" value="save" class="bg-primary text-white px-6 py-2 rounded hover:opacity-90">
+                        Enregistrer
+                    </button>
+                    <button type="submit" name="action" value="save_notify" class="bg-secondary text-white px-6 py-2 rounded hover:opacity-90">
+                        Enregistrer et Notifier
+                    </button>
+                    <a href="{% url 'etat_civil:liste_demandes' %}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:opacity-90">
+                        Retour
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

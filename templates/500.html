@@ -1,0 +1,35 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Erreur serveur{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-2xl mx-auto text-center">
+        <div class="text-6xl font-bold mb-4 text-gray-300">500</div>
+        <h1 class="text-3xl font-bold mb-4">Erreur serveur</h1>
+        <p class="text-gray-600 mb-8">
+            Une erreur technique s'est produite. Nos équipes ont été notifiées et travaillent pour résoudre le problème.
+        </p>
+
+        <div class="bg-gray-50 rounded-lg p-8 mb-8">
+            <p class="text-gray-700 mb-4">Que pouvez-vous faire ?</p>
+            <ul class="space-y-2 text-left max-w-xs mx-auto">
+                <li>
+                    <a href="javascript:location.reload()" class="text-primary hover:underline">🔄 Réessayer</a>
+                </li>
+                <li>
+                    <a href="{% url 'core:accueil' %}" class="text-primary hover:underline">🏠 Retour à l'accueil</a>
+                </li>
+                <li>
+                    <a href="mailto:contact@mairie.com" class="text-primary hover:underline">💬 Nous contacter</a>
+                </li>
+            </ul>
+        </div>
+
+        <p class="text-sm text-gray-500">
+            Identifiant erreur: {{ request.META.HTTP_X_REQUEST_ID|default:"N/A" }}
+        </p>
+    </div>
+</div>
+{% endblock %}

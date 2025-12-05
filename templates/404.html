@@ -1,0 +1,39 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-2xl mx-auto text-center">
+        <div class="text-6xl font-bold mb-4 text-gray-300">404</div>
+        <h1 class="text-3xl font-bold mb-4">Page non trouvée</h1>
+        <p class="text-gray-600 mb-8">
+            Désolé, la page que vous recherchez n'existe pas ou a été supprimée.
+        </p>
+
+        <div class="bg-gray-50 rounded-lg p-8 mb-8">
+            <p class="text-gray-700 mb-4">Vous pouvez :</p>
+            <ul class="space-y-2 text-left max-w-xs mx-auto">
+                <li class="text-primary hover:underline">
+                    <a href="{% url 'core:accueil' %}">🏠 Retour à l'accueil</a>
+                </li>
+                <li class="text-primary hover:underline">
+                    <a href="{% url 'contenu:article_list' %}">📄 Consulter les actualités</a>
+                </li>
+                <li class="text-primary hover:underline">
+                    <a href="{% url 'etat_civil:suivi_form' %}">📋 Accéder aux services d'État Civil</a>
+                </li>
+                <li class="text-primary hover:underline">
+                    <a href="{% url 'services:prendre_rdv' %}">🔧 Nos services</a>
+                </li>
+            </ul>
+        </div>
+
+        <p class="text-gray-600">
+            Vous avez trouvé un lien cassé ? 
+            <a href="mailto:contact@mairie.com" class="text-primary hover:underline">Nous le signaler</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

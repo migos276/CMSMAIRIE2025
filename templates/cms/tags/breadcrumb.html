@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+
+<nav aria-label="Fil d'Ariane" class="text-sm">
+    <ol class="flex items-center space-x-2 text-gray-300">
+        <li>
+            <a href="/" class="hover:text-white transition">Accueil</a>
+        </li>
+        {% for page in ancestors %}
+        <li class="flex items-center">
+            <span class="mx-2">/</span>
+            <a href="{% pageurl page %}" class="hover:text-white transition">{{ page.title }}</a>
+        </li>
+        {% endfor %}
+        <li class="flex items-center">
+            <span class="mx-2">/</span>
+            <span class="text-white font-medium">{{ current_page.title }}</span>
+        </li>
+    </ol>
+</nav>

@@ -1,0 +1,103 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Projets Municipaux | E-CMS{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Projets Municipaux</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <!-- Barre latérale de filtrage -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow p-6 sticky top-4">
+                <h3 class="font-bold mb-4">Filtrer par</h3>
+                
+                <form method="get" class="space-y-4">
+                    <!-- Catégorie -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Catégorie</label>
+                        <select name="categorie" class="w-full border rounded px-3 py-2">
+                            <option value="">Toutes</option>
+                            <option value="infrastructure">Infrastructure</option>
+                            <option value="education">Éducation</option>
+                            <option value="health">Santé</option>
+                            <option value="environment">Environnement</option>
+                        </select>
+                    </div>
+
+                    <!-- Statut -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Statut</label>
+                        <select name="statut" class="w-full border rounded px-3 py-2">
+                            <option value="">Tous</option>
+                            <option value="planning">En planification</option>
+                            <option value="ongoing">En cours</option>
+                            <option value="completed">Terminé</option>
+                        </select>
+                    </div>
+
+                    <!-- Recherche -->
+                    <div>
+                        <input type="search" name="q" placeholder="Rechercher..." class="w-full border rounded px-3 py-2">
+                    </div>
+
+                    <button type="submit" class="w-full bg-primary text-white py-2 rounded hover:opacity-90">
+                        Filtrer
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="lg:col-span-2">
+            <div class="space-y-6">
+                <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+                    <img src="https://via.placeholder.com/600x400" alt="Projet" class="w-full h-48 object-cover">
+                    
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs bg-secondary text-white px-2 py-1 rounded">Infrastructure</span>
+                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">En cours</span>
+                            <span class="text-xs text-gray-500">Priorité normale</span>
+                        </div>
+
+                        <h2 class="text-xl font-bold mb-2 hover:text-primary">
+                            <a href="#">Titre du projet</a>
+                        </h2>
+
+                        <p class="text-gray-600 mb-4">Description détaillée du projet municipal en cours de réalisation...</p>
+
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium">Progression</span>
+                                <span class="text-sm text-gray-600">45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-secondary h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                            <span><i class="fas fa-calendar mr-1"></i>Début: 2025-01-01</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>Localisation</span>
+                        </div>
+
+                        <a href="#" class="text-primary hover:underline font-medium">Voir les détails →</a>
+                    </div>
+                </article>
+            </div>
+
+            {% if is_paginated %}
+            <div class="flex justify-center gap-2 mt-8">
+                <a href="#" class="px-3 py-2 border rounded hover:bg-gray-100">«</a>
+                <a href="#" class="px-3 py-2 border rounded hover:bg-gray-100">‹</a>
+                <span class="px-3 py-2">1 / 4</span>
+                <a href="#" class="px-3 py-2 border rounded hover:bg-gray-100">›</a>
+                <a href="#" class="px-3 py-2 border rounded hover:bg-gray-100">»</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

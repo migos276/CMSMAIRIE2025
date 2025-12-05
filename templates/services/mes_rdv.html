@@ -1,0 +1,80 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Mes Rendez-vous | E-CMS{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-2">Mes Rendez-vous</h1>
+    <p class="text-gray-600 mb-8">Consulter et gérer vos rendez-vous</p>
+
+    {% if rendez_vous %}
+    <div class="space-y-4">
+        {% for rdv in rendez_vous %}
+        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-xl font-bold">{{ rdv.type_rdv.nom }}</h3>
+                    <p class="text-gray-600 text-sm">Numéro: {{ rdv.numero }}</p>
+                </div>
+                <span class="px-3 py-1 rounded-full text-white text-sm font-bold
+                    {% if rdv.statut == 'confirme' %}bg-green-500
+                    {% elif rdv.statut == 'en_attente' %}bg-yellow-500
+                    {% elif rdv.statut == 'annule' %}bg-red-500
+                    {% else %}bg-gray-500{% endif %}">
+                    {{ rdv.get_statut_display }}
+                </span>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                <div>
+                    <span class="text-gray-600 text-sm">Date</span>
+                    <p class="font-bold">{{ rdv.date|date:"d/m/Y" }}</p>
+                </div>
+                <div>
+                    <span class="text-gray-600 text-sm">Heure</span>
+                    <p class="font-bold">{{ rdv.heure|time:"H:i" }}</p>
+                </div>
+                <div>
+                    <span class="text-gray-600 text-sm">Demandeur</span>
+                    <p class="font-bold">{{ rdv.nom }}</p>
+                </div>
+                <div>
+                    <span class="text-gray-600 text-sm">Contact</span>
+                    <p class="font-bold text-sm">{{ rdv.email }}</p>
+                </div>
+            </div>
+
+            {% if rdv.description %}
+            <div class="mb-4 p-3 bg-gray-50 rounded">
+                <p class="text-sm text-gray-700"><strong>Notes:</strong> {{ rdv.description }}</p>
+            </div>
+            {% endif %}
+
+            <div class="flex gap-2">
+                <a href="{% url 'services:confirmation_rdv' rdv.numero %}" class="flex-1 bg-primary text-white py-2 px-4 rounded hover:opacity-90 text-center">
+                    <i class="fas fa-file-pdf mr-2"></i>
+                    Télécharger la confirmation
+                </a>
+                {% if rdv.statut == 'confirme' %}
+                <button class="bg-red-500 text-white py-2 px-4 rounded hover:opacity-90" onclick="if(confirm('Êtes-vous sûr?')) alert('Fonction annulation non disponible')">
+                    <i class="fas fa-times mr-2"></i>
+                    Annuler
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-gray-50 p-12 text-center rounded-lg">
+        <i class="fas fa-calendar-times text-4xl text-gray-400 mb-4"></i>
+        <p class="text-gray-600 mb-4">Vous n'avez aucun rendez-vous pour le moment</p>
+        <a href="{% url 'services:prendre_rdv' %}" class="inline-block bg-primary text-white py-2 px-6 rounded hover:opacity-90">
+            <i class="fas fa-calendar-plus mr-2"></i>
+            Prendre un rendez-vous
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

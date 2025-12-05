@@ -1,0 +1,100 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold mb-8">Mon Profil</h1>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 text-red-700">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Email -->
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium mb-1">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Prénom -->
+            <div>
+                <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium mb-1">Prénom</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.first_name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Nom -->
+            <div>
+                <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium mb-1">Nom</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.last_name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Téléphone -->
+            {% if form.telephone %}
+            <div>
+                <label for="{{ form.telephone.id_for_label }}" class="block text-sm font-medium mb-1">Téléphone</label>
+                {{ form.telephone }}
+                {% if form.telephone.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.telephone.errors.0 }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Adresse -->
+            {% if form.adresse %}
+            <div>
+                <label for="{{ form.adresse.id_for_label }}" class="block text-sm font-medium mb-1">Adresse</label>
+                {{ form.adresse }}
+                {% if form.adresse.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.adresse.errors.0 }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- CNI -->
+            {% if form.cni %}
+            <div>
+                <label for="{{ form.cni.id_for_label }}" class="block text-sm font-medium mb-1">Numéro CNI</label>
+                {{ form.cni }}
+                {% if form.cni.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.cni.errors.0 }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Boutons -->
+            <div class="flex gap-4">
+                <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:opacity-90 font-medium">
+                    Enregistrer les modifications
+                </button>
+                <a href="{% url 'core:accueil' %}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:opacity-90 font-medium">
+                    Annuler
+                </a>
+            </div>
+        </form>
+
+        <hr class="my-8">
+
+        <div class="text-center">
+            <a href="{% url 'utilisateurs:deconnexion' %}" class="text-red-600 hover:underline">Déconnexion</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

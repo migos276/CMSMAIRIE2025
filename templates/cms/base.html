@@ -1,0 +1,172 @@
+{% load static wagtailcore_tags wagtailuserbar cms_tags %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% get_config_mairie as config %}
+    
+    <title>{% block title %}{% if self.seo_titre %}{{ self.seo_titre }}{% else %}{{ self.title }}{% endif %}{% endblock %} | {{ config.nom_mairie|default:"E-CMS" }}</title>
+    
+    <meta name="description" content="{% block meta_description %}{{ self.seo_description|default:config.meta_description }}{% endblock %}">
+    
+    {% if config.favicon %}
+    <link rel="icon" href="{{ config.favicon.file.url }}">
+    {% endif %}
+    
+    <!-- Enhanced CSS variables for full color customization -->
+    <style>
+        :root {
+            --color-primary: {{ config.couleur_primaire|default:"#0F766E" }};
+            --color-secondary: {{ config.couleur_secondaire|default:"#1E40AF" }};
+            --color-accent: {{ config.couleur_accent|default:"#F59E0B" }};
+            --color-primary-light: {{ config.couleur_primaire|default:"#0F766E" }}15;
+            --color-primary-dark: {{ config.couleur_primaire|default:"#0F766E" }}dd;
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+        
+        .text-primary { color: var(--color-primary); }
+        .text-secondary { color: var(--color-secondary); }
+        .text-accent { color: var(--color-accent); }
+        
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-secondary { background-color: var(--color-secondary); }
+        .bg-accent { background-color: var(--color-accent); }
+        
+        .border-primary { border-color: var(--color-primary); }
+        
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        }
+    </style>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        accent: 'var(--color-accent)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50 antialiased">
+    {% wagtailuserbar %}
+    
+    <!-- Improved Header with better styling -->
+    <header class="bg-white/95 backdrop-blur-sm shadow-sm fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-3 group">
+                    {% if config.logo %}
+                    <img src="{{ config.logo.file.url }}" alt="{{ config.nom_mairie }}" class="h-10 lg:h-12 w-auto">
+                    {% else %}
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center" style="background-color: var(--color-primary);">
+                        <i class="fas fa-city text-white text-lg lg:text-xl"></i>
+                    </div>
+                    {% endif %}
+                    <span class="text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-[--color-primary] transition">{{ config.nom_mairie|default:"E-CMS" }}</span>
+                </a>
+                
+                <!-- Navigation -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    {% menu_principal %}
+                </nav>
+                
+                <!-- CTA Button -->
+                <div class="hidden lg:block">
+                    <a href="/cms-admin/" class="btn-primary px-6 py-2.5 rounded-lg font-semibold shadow-lg">
+                        Espace Admin
+                    </a>
+                </div>
+                
+                <!-- Menu mobile -->
+                <button class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menu mobile déroulant -->
+        <div class="hidden lg:hidden border-t bg-white" id="mobile-menu">
+            <nav class="px-4 py-4 space-y-2">
+                {% menu_principal %}
+                <a href="/cms-admin/" class="block btn-primary px-4 py-3 rounded-lg text-center font-semibold mt-4">
+                    Espace Admin
+                </a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Spacer for fixed header -->
+    <div class="h-16 lg:h-20"></div>
+    
+    <!-- Contenu principal -->
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    {% footer %}
+    
+    <!-- Scripts -->
+    <script>
+        // Toggle menu mobile
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
+            document.getElementById('mobile-menu')?.classList.toggle('hidden');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu')?.classList.add('hidden');
+            });
+        });
+    </script>
+    
+    {% if config.google_analytics_id %}
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.google_analytics_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ config.google_analytics_id }}');
+    </script>
+    {% endif %}
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

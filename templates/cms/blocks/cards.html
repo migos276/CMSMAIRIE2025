@@ -1,0 +1,51 @@
+{% load wagtailimages_tags wagtailcore_tags %}
+
+<!-- Redesigned cards with better hover effects and spacing -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if value.titre_section %}
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{{ value.titre_section }}</h2>
+            {% if value.sous_titre %}
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ value.sous_titre }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{% if value.colonnes %}{{ value.colonnes }}{% else %}3{% endif %} gap-8">
+            {% for carte in value.cartes %}
+            <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+                {% if carte.image %}
+                {% image carte.image fill-600x400 as card_img %}
+                <div class="relative overflow-hidden">
+                    <img src="{{ card_img.url }}" alt="{{ carte.titre }}" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                </div>
+                {% endif %}
+                
+                <div class="p-6 lg:p-8">
+                    {% if carte.icone %}
+                    <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition group-hover:scale-110" style="background-color: var(--color-primary); opacity: 0.1;">
+                        <i class="fas fa-{{ carte.icone }} text-2xl" style="color: var(--color-primary);"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-[--color-primary] transition">{{ carte.titre }}</h3>
+                    
+                    {% if carte.description %}
+                    <p class="text-gray-600 mb-5 leading-relaxed">{{ carte.description }}</p>
+                    {% endif %}
+                    
+                    {% if carte.lien or carte.url_externe %}
+                    <a href="{% if carte.lien %}{% pageurl carte.lien %}{% else %}{{ carte.url_externe }}{% endif %}"
+                       class="inline-flex items-center gap-2 font-semibold transition group-hover:gap-3" style="color: var(--color-primary);">
+                        En savoir plus 
+                        <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

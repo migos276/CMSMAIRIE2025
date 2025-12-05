@@ -1,0 +1,113 @@
+{% extends "cms/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags cms_tags %}
+
+{% block content %}
+<!-- En-tête de page -->
+<section class="bg-[--color-primary] text-white py-12">
+    <div class="container mx-auto px-4">
+        {% breadcrumb %}
+        <div class="flex items-center space-x-4 mt-4">
+            {% if self.icone %}
+            <i class="fas fa-{{ self.icone }} text-4xl"></i>
+            {% endif %}
+            <h1 class="text-3xl lg:text-4xl font-bold">{{ self.title }}</h1>
+        </div>
+    </div>
+</section>
+
+<!-- Contenu principal -->
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Contenu principal -->
+            <div class="lg:col-span-2">
+                {% if self.image_principale %}
+                {% image self.image_principale fill-800x400 as main_img %}
+                <img src="{{ main_img.url }}" alt="{{ self.title }}" class="w-full rounded-lg shadow-md mb-8">
+                {% endif %}
+
+                {% if self.introduction %}
+                <div class="prose prose-lg max-w-none mb-8">
+                    {{ self.introduction|richtext }}
+                </div>
+                {% endif %}
+
+                <!-- Contenu StreamField -->
+                {% for block in self.contenu %}
+                    {% include_block block %}
+                {% endfor %}
+            </div>
+
+            <!-- Informations pratiques -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6">Informations pratiques</h2>
+
+                    {% if self.horaires %}
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-clock mr-2"></i>Horaires
+                        </h3>
+                        <div class="text-gray-600">
+                            {{ self.horaires|richtext }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if self.lieu %}
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i>Lieu
+                        </h3>
+                        <p class="text-gray-600">{{ self.lieu }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if self.contact_email or self.contact_telephone %}
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-phone mr-2"></i>Contact
+                        </h3>
+                        {% if self.contact_email %}
+                        <p class="text-gray-600">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <a href="mailto:{{ self.contact_email }}" class="text-[--color-primary] hover:underline">
+                                {{ self.contact_email }}
+                            </a>
+                        </p>
+                        {% endif %}
+                        {% if self.contact_telephone %}
+                        <p class="text-gray-600">
+                            <i class="fas fa-phone mr-2"></i>
+                            <a href="tel:{{ self.contact_telephone }}" class="text-[--color-primary] hover:underline">
+                                {{ self.contact_telephone }}
+                            </a>
+                        </p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if self.documents_requis %}
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-file-alt mr-2"></i>Documents requis
+                        </h3>
+                        <div class="text-gray-600">
+                            {{ self.documents_requis|richtext }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Bouton d'action -->
+                    <div class="mt-6">
+                        <a href="{% url 'services:prendre_rdv' %}"
+                           class="w-full bg-[--color-primary] text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors inline-block text-center">
+                            <i class="fas fa-calendar-plus mr-2"></i>Prendre rendez-vous
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

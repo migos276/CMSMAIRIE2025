@@ -1,0 +1,91 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Newsletter{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold mb-4">Newsletter</h1>
+        <p class="text-gray-600 mb-8">
+            Inscrivez-vous pour recevoir les actualités de la mairie directement dans votre boîte mail.
+        </p>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 text-red-700">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if messages %}
+            <div class="bg-green-50 border-l-4 border-green-500 p-4 text-green-700">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Email -->
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium mb-1">
+                    Adresse email
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Thèmes d'intérêt -->
+            {% if form.themes %}
+            <div>
+                <label class="block text-sm font-medium mb-2">Thèmes qui vous intéressent</label>
+                <div class="space-y-2">
+                    {% for choice_value, choice_label in form.themes %}
+                    <div class="flex items-center">
+                        <input type="checkbox" name="themes" value="{{ choice_value }}" id="theme_{{ choice_value }}" class="rounded">
+                        <label for="theme_{{ choice_value }}" class="ml-2">{{ choice_label }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Consentement -->
+            <div class="bg-gray-50 p-4 rounded">
+                <div class="flex items-start">
+                    <input type="checkbox" name="consentement" id="consentement" required class="mt-1">
+                    <label for="consentement" class="ml-2 text-sm">
+                        J'accepte de recevoir les actualités de la mairie et j'ai lu la 
+                        <a href="#" class="text-primary hover:underline">politique de confidentialité</a>
+                    </label>
+                </div>
+                {% if form.consentement.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.consentement.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Boutons -->
+            <div class="flex gap-4">
+                <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:opacity-90 font-medium">
+                    S'abonner
+                </button>
+                <a href="{% url 'core:accueil' %}" class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:opacity-90 font-medium">
+                    Annuler
+                </a>
+            </div>
+        </form>
+
+        <div class="mt-8 pt-8 border-t">
+            <p class="text-sm text-gray-600">
+                Vous recevrez un email de confirmation. Vous pourrez vous désabonner à tout moment.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Tableau de Bord</h1>
+
+    {% if user.is_authenticated %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Statistiques -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-3xl font-bold text-primary">0</div>
+            <p class="text-gray-600">Rendez-vous</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-3xl font-bold text-secondary">0</div>
+            <p class="text-gray-600">Demandes</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-3xl font-bold text-accent">0</div>
+            <p class="text-gray-600">Réclamations</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="text-3xl font-bold text-green-600">0</div>
+            <p class="text-gray-600">Messages</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Actions rapides -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold mb-4">Actions Rapides</h2>
+            <ul class="space-y-2">
+                <li><a href="{% url 'services:prendre_rdv' %}" class="text-primary hover:underline">📅 Prendre un rendez-vous</a></li>
+                <li><a href="{% url 'etat_civil:suivi_form' %}" class="text-primary hover:underline">📋 Demander un acte</a></li>
+                <li><a href="{% url 'services:soumettre_reclamation' %}" class="text-primary hover:underline">💬 Déposer une réclamation</a></li>
+                <li><a href="{% url 'utilisateurs:profil' %}" class="text-primary hover:underline">👤 Mon profil</a></li>
+            </ul>
+        </div>
+
+        <!-- Informations utilisateur -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold mb-4">Mon Profil</h2>
+            <div class="space-y-2">
+                <p><strong>Nom:</strong> {{ user.last_name|default:"Non renseigné" }}</p>
+                <p><strong>Prénom:</strong> {{ user.first_name|default:"Non renseigné" }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Depuis:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+                <a href="{% url 'utilisateurs:profil' %}" class="text-primary hover:underline">Modifier mon profil →</a>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+        <p class="text-gray-800">
+            Veuillez <a href="{% url 'utilisateurs:connexion' %}" class="text-blue-600 hover:underline">vous connecter</a> 
+            pour accéder à votre tableau de bord.
+        </p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

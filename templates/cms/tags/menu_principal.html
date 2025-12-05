@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+
+<!-- Improved menu with hover effects -->
+{% for menu in menus %}
+    {% for item in menu.items.all %}
+    <a href="{{ item.lien }}" 
+       class="relative text-gray-600 hover:text-[--color-primary] font-medium transition-colors py-2 group"
+       {% if item.ouvrir_nouvel_onglet %}target="_blank" rel="noopener"{% endif %}>
+        {{ item.titre }}
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[--color-primary] group-hover:w-full transition-all duration-300"></span>
+    </a>
+    {% endfor %}
+{% endfor %}

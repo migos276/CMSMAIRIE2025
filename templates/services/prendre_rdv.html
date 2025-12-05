@@ -1,0 +1,149 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Prendre un Rendez-vous | E-CMS{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Prendre un Rendez-vous</h1>
+        <p class="text-gray-600 mb-8">Réservez votre rendez-vous auprès des services municipaux</p>
+
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+
+                <!-- Type de rendez-vous -->
+                <div>
+                    <label for="{{ form.type_rdv.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Type de service *
+                    </label>
+                    <select name="type_rdv" id="{{ form.type_rdv.id_for_label }}" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary" required>
+                        <option value="">-- Sélectionnez un service --</option>
+                        {% for type_rdv in types_rdv %}
+                        <option value="{{ type_rdv.id }}">{{ type_rdv.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.type_rdv.errors %}
+                    <span class="text-red-500 text-sm">{{ form.type_rdv.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Date -->
+                <div>
+                    <label for="{{ form.date.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Date souhaitée *
+                    </label>
+                    {{ form.date }}
+                    {% if form.date.errors %}
+                    <span class="text-red-500 text-sm">{{ form.date.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Heure -->
+                <div>
+                    <label for="{{ form.heure.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Heure souhaitée *
+                    </label>
+                    {{ form.heure }}
+                    {% if form.heure.errors %}
+                    <span class="text-red-500 text-sm">{{ form.heure.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Nom -->
+                <div>
+                    <label for="{{ form.nom.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nom *
+                    </label>
+                    {{ form.nom }}
+                    {% if form.nom.errors %}
+                    <span class="text-red-500 text-sm">{{ form.nom.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email *
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <span class="text-red-500 text-sm">{{ form.email.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Téléphone -->
+                <div>
+                    <label for="{{ form.telephone.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Téléphone *
+                    </label>
+                    {{ form.telephone }}
+                    {% if form.telephone.errors %}
+                    <span class="text-red-500 text-sm">{{ form.telephone.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Description (Optionnel)
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <span class="text-red-500 text-sm">{{ form.description.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Bouton -->
+                <div class="flex gap-4">
+                    <button type="submit" class="flex-1 bg-primary text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition">
+                        <i class="fas fa-calendar-check mr-2"></i>
+                        Confirmer le rendez-vous
+                    </button>
+                    <a href="{% url 'services:index' %}" class="flex-1 bg-gray-300 text-gray-700 font-bold py-3 px-4 rounded-lg text-center hover:opacity-90 transition">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Retour
+                    </a>
+                </div>
+            </form>
+
+            <!-- Informations utiles -->
+            <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+                <h3 class="font-bold text-blue-900 mb-2">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Informations utiles
+                </h3>
+                <ul class="text-sm text-blue-800 space-y-1">
+                    <li>• Veuillez réserver votre rendez-vous au moins 2 jours à l'avance</li>
+                    <li>• Un email de confirmation sera envoyé à votre adresse</li>
+                    <li>• En cas de modification, contactez le service directement</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Autres services -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-6">Autres services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="{% url 'services:soumettre_reclamation' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition text-center">
+                    <i class="fas fa-exclamation-circle text-2xl text-accent mb-2"></i>
+                    <h3 class="font-bold">Soumettre une réclamation</h3>
+                    <p class="text-sm text-gray-600">Signaler un problème ou une réclamation</p>
+                </a>
+                <a href="{% url 'services:newsletter' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition text-center">
+                    <i class="fas fa-envelope text-2xl text-secondary mb-2"></i>
+                    <h3 class="font-bold">S'abonner à la newsletter</h3>
+                    <p class="text-sm text-gray-600">Recevoir les actualités municipales</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

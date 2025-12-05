@@ -1,0 +1,90 @@
+{% load wagtaildocs_tags %}
+
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        {% if value.titre %}
+        <h2 class="text-3xl font-bold text-center mb-12">{{ value.titre }}</h2>
+        {% endif %}
+        
+        <div class="max-w-4xl mx-auto">
+            {% if value.affichage == 'grille' %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for item in value.documents %}
+                <a href="{{ item.document.url }}" 
+                   class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition flex items-start"
+                   download>
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-file-pdf text-red-500 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold text-gray-900">
+                            {{ item.titre_personnalise|default:item.document.title }}
+                        </h3>
+                        {% if item.description %}
+                        <p class="text-sm text-gray-500 mt-1">{{ item.description }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            
+            {% elif value.affichage == 'tableau' %}
+            <table class="w-full bg-white rounded-lg shadow-md overflow-hidden">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Document</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Description</th>
+                        <th class="px-6 py-3 text-right text-sm font-semibold text-gray-900">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    {% for item in value.documents %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-pdf text-red-500 mr-3"></i>
+                                {{ item.titre_personnalise|default:item.document.title }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-500">{{ item.description }}</td>
+                        <td class="px-6 py-4 text-right">
+                            <a href="{{ item.document.url }}" 
+                               class="text-[--color-primary] hover:underline"
+                               download>
+                                Télécharger
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {% else %}
+            <ul class="space-y-3">
+                {% for item in value.documents %}
+                <li class="bg-white rounded-lg shadow-sm border p-4 flex items-center justify-between hover:shadow-md transition">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-red-100 rounded flex items-center justify-center">
+                            <i class="fas fa-file-pdf text-red-500"></i>
+                        </div>
+                        <div class="ml-4">
+                            <span class="font-medium text-gray-900">
+                                {{ item.titre_personnalise|default:item.document.title }}
+                            </span>
+                            {% if item.description %}
+                            <p class="text-sm text-gray-500">{{ item.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <a href="{{ item.document.url }}" 
+                       class="px-4 py-2 bg-[--color-primary] text-white rounded-lg hover:opacity-90 transition"
+                       download>
+                        <i class="fas fa-download mr-2"></i>Télécharger
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</section>

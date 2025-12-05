@@ -1,0 +1,29 @@
+{% load wagtailimages_tags %}
+
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        {% if value.titre %}
+        <h2 class="text-3xl font-bold text-center mb-12">{{ value.titre }}</h2>
+        {% endif %}
+        
+        <div class="grid grid-cols-2 md:grid-cols-{{ value.colonnes|default:'3' }} gap-4">
+            {% for item in value.images %}
+            {% image item.image fill-400x300 as thumb %}
+            {% image item.image original as full %}
+            
+            <a href="{{ full.url }}" 
+               class="group relative overflow-hidden rounded-lg"
+               {% if value.lightbox %}data-lightbox="galerie"{% endif %}>
+                <img src="{{ thumb.url }}" alt="{{ item.legende }}" 
+                     class="w-full h-48 object-cover transition group-hover:scale-105">
+                
+                {% if item.legende %}
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                    <p class="text-white text-center px-4">{{ item.legende }}</p>
+                </div>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>

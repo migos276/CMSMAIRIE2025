@@ -1,0 +1,60 @@
+{% extends "cms/base.html" %}
+{% load static %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Nos Services en Ligne</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendez-vous -->
+        <a href="{% url 'services:prendre_rdv' %}" class="group">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+                <div class="text-4xl mb-3 transform group-hover:scale-110 transition">📅</div>
+                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition">Rendez-vous</h3>
+                <p class="text-gray-600">Prenez rendez-vous en ligne pour vos démarches administratives</p>
+            </div>
+        </a>
+
+        <!-- Réclamations -->
+        <a href="{% url 'services:soumettre_reclamation' %}" class="group">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+                <div class="text-4xl mb-3 transform group-hover:scale-110 transition">💬</div>
+                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition">Réclamations</h3>
+                <p class="text-gray-600">Déposez une réclamation et suivez son traitement en temps réel</p>
+            </div>
+        </a>
+
+        <!-- Newsletter -->
+        <a href="{% url 'services:newsletter' %}" class="group">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+                <div class="text-4xl mb-3 transform group-hover:scale-110 transition">📧</div>
+                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition">Newsletter</h3>
+                <p class="text-gray-600">Restez informé des actualités de la mairie</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- Horaires et contact -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-4">🕐 Horaires d'ouverture</h3>
+            <ul class="space-y-2">
+                <li><strong>Lundi - Vendredi</strong> : 8h00 - 17h00</li>
+                <li><strong>Samedi</strong> : 9h00 - 12h00</li>
+                <li><strong>Dimanche</strong> : Fermé</li>
+            </ul>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-4">📞 Nous contacter</h3>
+            <ul class="space-y-2">
+                <li>📱 <a href="tel:+237123456789" class="text-primary hover:underline">+237 123 456 789</a></li>
+                <li>📧 <a href="mailto:contact@mairie.com" class="text-primary hover:underline">contact@mairie.com</a></li>
+                <li>📍 12 rue de la Mairie, Yaounde</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

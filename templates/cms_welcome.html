@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue sur E-CMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #1E40AF;
+            --color-secondary: #059669;
+            --color-accent: #F59E0B;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-green-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-lg">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-cube text-3xl text-primary"></i>
+                        <h1 class="text-2xl font-bold text-gray-900">E-CMS</h1>
+                    </div>
+                    <p class="text-gray-600">Système de Gestion de Contenu pour les Communes</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-12">
+            <!-- Hero -->
+            <div class="bg-white rounded-lg shadow-lg p-12 mb-12 text-center">
+                <i class="fas fa-rocket text-6xl text-primary mb-4"></i>
+                <h2 class="text-4xl font-bold mb-4">Bienvenue sur E-CMS ! 🎉</h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Votre système de gestion de contenu professionnel pour votre commune
+                </p>
+                <div class="flex gap-4 justify-center">
+                    <a href="/cms-admin/" class="bg-primary text-white py-3 px-8 rounded-lg hover:opacity-90 text-lg font-bold">
+                        <i class="fas fa-edit mr-2"></i>
+                        Aller au CMS
+                    </a>
+                    <a href="/admin/" class="bg-secondary text-white py-3 px-8 rounded-lg hover:opacity-90 text-lg font-bold">
+                        <i class="fas fa-cogs mr-2"></i>
+                        Aller à l'Admin
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition">
+                    <i class="fas fa-file-alt text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Gestion de Pages</h3>
+                    <p class="text-gray-600 mb-4">
+                        Créez, éditez et publiez des pages sans toucher au code
+                    </p>
+                    <a href="/cms-admin/pages/" class="text-primary hover:underline font-bold">
+                        Accéder →
+                    </a>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition">
+                    <i class="fas fa-images text-4xl text-secondary mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Galerie Médias</h3>
+                    <p class="text-gray-600 mb-4">
+                        Uploadez et organisez vos images et documents
+                    </p>
+                    <a href="/cms-admin/images/" class="text-primary hover:underline font-bold">
+                        Accéder →
+                    </a>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition">
+                    <i class="fas fa-newspaper text-4xl text-accent mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Articles</h3>
+                    <p class="text-gray-600 mb-4">
+                        Publiez des actualités et des articles pour votre commune
+                    </p>
+                    <a href="/admin/contenu/article/" class="text-primary hover:underline font-bold">
+                        Accéder →
+                    </a>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition">
+                    <i class="fas fa-calendar text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Événements</h3>
+                    <p class="text-gray-600 mb-4">
+                        Créez des événements municipaux et informez les citoyens
+                    </p>
+                    <a href="/admin/contenu/evenement/" class="text-primary hover:underline font-bold">
+                        Accéder →
+                    </a>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition">
+                    <i class="fas fa-tools text-4xl text-secondary mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Services</h3>
+                    <p class="text-gray-600 mb-4">
+                        Gérez rendez-vous, réclamations et formulaires de contact
+                    </p>
+                    <a href="/admin/services/" class="text-primary hover:underline font-bold">
+                        Accéder →
+                    </a>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition">
+                    <i class="fas fa-users text-4xl text-accent mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Utilisateurs</h3>
+                    <p class="text-gray-600 mb-4">
+                        Gérez les utilisateurs et leurs permissions
+                    </p>
+                    <a href="/admin/utilisateurs/" class="text-primary hover:underline font-bold">
+                        Accéder →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Start -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-12">
+                <h2 class="text-2xl font-bold mb-6">
+                    <i class="fas fa-zap text-accent mr-2"></i>
+                    Démarrage Rapide
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Step 1 -->
+                    <div class="border-l-4 border-primary pl-6 py-4">
+                        <h3 class="text-lg font-bold mb-2">
+                            <span class="bg-primary text-white rounded-full w-8 h-8 inline-flex items-center justify-center mr-2">1</span>
+                            Créer une Page
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Allez à <strong>/cms-admin/</strong></li>
+                            <li>Cliquez sur <strong>Pages</strong></li>
+                            <li>Cliquez sur <strong>Ajouter</strong></li>
+                            <li>Remplissez le titre et le contenu</li>
+                            <li>Cliquez sur <strong>Publier</strong></li>
+                        </ol>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="border-l-4 border-secondary pl-6 py-4">
+                        <h3 class="text-lg font-bold mb-2">
+                            <span class="bg-secondary text-white rounded-full w-8 h-8 inline-flex items-center justify-center mr-2">2</span>
+                            Uploader une Image
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Allez à <strong>/cms-admin/</strong></li>
+                            <li>Cliquez sur <strong>Images</strong></li>
+                            <li>Cliquez sur <strong>Uploader</strong></li>
+                            <li>Sélectionnez une image</li>
+                            <li>Cliquez sur <strong>Uploader</strong></li>
+                        </ol>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="border-l-4 border-accent pl-6 py-4">
+                        <h3 class="text-lg font-bold mb-2">
+                            <span class="bg-accent text-white rounded-full w-8 h-8 inline-flex items-center justify-center mr-2">3</span>
+                            Créer un Article
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Allez à <strong>/admin/</strong></li>
+                            <li>Cliquez sur <strong>Articles</strong></li>
+                            <li>Cliquez sur <strong>Ajouter</strong></li>
+                            <li>Remplissez les informations</li>
+                            <li>Cliquez sur <strong>Enregistrer</strong></li>
+                        </ol>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="border-l-4 border-primary pl-6 py-4">
+                        <h3 class="text-lg font-bold mb-2">
+                            <span class="bg-primary text-white rounded-full w-8 h-8 inline-flex items-center justify-center mr-2">4</span>
+                            Voir sur le Site
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Retournez au site</li>
+                            <li>Naviguez vers la section concernée</li>
+                            <li>Votre contenu est visible !</li>
+                            <li>Partez le lien avec les citoyens</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interface Overview -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-12">
+                <h2 class="text-2xl font-bold mb-6">
+                    <i class="fas fa-compass text-primary mr-2"></i>
+                    Interfaces Disponibles
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Wagtail CMS -->
+                    <div class="border-2 border-primary rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-primary mb-4">
+                            <i class="fas fa-magic mr-2"></i>
+                            Wagtail CMS
+                        </h3>
+                        <p class="text-gray-600 mb-4">Interface moderne pour gérer les pages et le contenu</p>
+                        <ul class="space-y-2 text-gray-700 mb-6">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Gestion des Pages</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Galerie d'Images</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Bibliothèque Documents</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Workflow Édition</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Versions du Contenu</li>
+                        </ul>
+                        <a href="/cms-admin/" class="inline-block bg-primary text-white py-2 px-6 rounded hover:opacity-90">
+                            <i class="fas fa-arrow-right mr-2"></i>
+                            Accéder
+                        </a>
+                    </div>
+
+                    <!-- Django Admin -->
+                    <div class="border-2 border-secondary rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-secondary mb-4">
+                            <i class="fas fa-cog mr-2"></i>
+                            Django Admin
+                        </h3>
+                        <p class="text-gray-600 mb-4">Interface puissante pour gérer tous les modèles de données</p>
+                        <ul class="space-y-2 text-gray-700 mb-6">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Articles & Actualités</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Événements & Projets</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Gestion des Utilisateurs</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Formulaires & Réponses</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Permissions Avancées</li>
+                        </ul>
+                        <a href="/admin/" class="inline-block bg-secondary text-white py-2 px-6 rounded hover:opacity-90">
+                            <i class="fas fa-arrow-right mr-2"></i>
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-8 mb-12">
+                <h2 class="text-2xl font-bold text-blue-900 mb-4">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    Conseils d'Utilisation
+                </h2>
+                <ul class="space-y-3 text-blue-800">
+                    <li>
+                        <strong>💡 Utilisez des slugs explicites:</strong>
+                        Au lieu de "page1", utilisez "nouvelles-routes" ou "services-municipaux"
+                    </li>
+                    <li>
+                        <strong>📸 Optimisez vos images:</strong>
+                        Utilisez des images bien compressées (< 2 MB) pour un meilleur chargement
+                    </li>
+                    <li>
+                        <strong>📝 Écrivez du contenu SEO-friendly:</strong>
+                        Utilisez des titres clairs, des paragraphes courts et des mots-clés pertinents
+                    </li>
+                    <li>
+                        <strong>👥 Créez des comptes utilisateurs:</strong>
+                        Assignez des rôles d'éditeur à vos collaborateurs
+                    </li>
+                    <li>
+                        <strong>🔒 Sauvegardez régulièrement:</strong>
+                        La base de données est votre actif le plus précieux
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <h2 class="text-2xl font-bold mb-4">Besoin d'Aide ?</h2>
+                <p class="text-gray-600 mb-6">
+                    Consultez la documentation complète du CMS ou contactez votre administrateur système
+                </p>
+                <div class="flex gap-4 justify-center">
+                    <a href="/cms-admin/" class="bg-primary text-white py-2 px-6 rounded hover:opacity-90">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Documentation
+                    </a>
+                    <a href="https://docs.wagtail.org/" target="_blank" class="bg-secondary text-white py-2 px-6 rounded hover:opacity-90">
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                        Wagtail Docs
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white mt-12">
+            <div class="container mx-auto px-4 py-8 text-center">
+                <p>E-CMS © 2025 - Système de Gestion de Contenu pour les Communes</p>
+                <p class="text-gray-400 text-sm mt-2">Propulsé par Django, Wagtail et Tailwind CSS</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

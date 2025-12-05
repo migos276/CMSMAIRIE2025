@@ -1,0 +1,47 @@
+{% load wagtailcore_tags %}
+
+<!-- Modern services section with animated icons -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if value.titre_section %}
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-4" style="background-color: var(--color-primary); opacity: 0.1; color: var(--color-primary);">
+                <i class="fas fa-cogs"></i>
+                <span>Nos Services</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{{ value.titre_section }}</h2>
+            {% if value.sous_titre %}
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ value.sous_titre }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{% if value.colonnes %}{{ value.colonnes }}{% else %}3{% endif %} gap-8">
+            {% for item in value.services %}
+            {% with service=item.service %}
+            <div class="group bg-gray-50 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100">
+                {% if service.icone %}
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110" style="background-color: var(--color-primary)15;">
+                    <i class="fas fa-{{ service.icone }} text-2xl transition-colors duration-300" style="color: var(--color-primary);"></i>
+                </div>
+                {% endif %}
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-[--color-primary] transition">{{ service.nom }}</h3>
+                
+                {% if service.description %}
+                <p class="text-gray-600 mb-5 leading-relaxed">{{ service.description }}</p>
+                {% endif %}
+                
+                {% if service.lien_page %}
+                <a href="{% pageurl service.lien_page %}" 
+                   class="inline-flex items-center gap-2 font-semibold transition-all group-hover:gap-3" style="color: var(--color-primary);">
+                    Acceder au service
+                    <i class="fas fa-arrow-right text-sm transform group-hover:translate-x-1 transition"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,50 @@
+{% load wagtailimages_tags wagtailcore_tags %}
+
+<!-- Completely redesigned hero block with modern styling -->
+<section class="relative {% if value.hauteur == 'full' %}min-h-screen{% elif value.hauteur == 'large' %}min-h-[700px]{% elif value.hauteur == 'medium' %}min-h-[550px]{% else %}min-h-[450px]{% endif %} flex items-center overflow-hidden">
+    {% if value.image %}
+    {% image value.image fill-1920x1080 as bg_img %}
+    <div class="absolute inset-0">
+        <img src="{{ bg_img.url }}" alt="" class="w-full h-full object-cover">
+        {% if value.overlay %}
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/60 to-gray-900/40"></div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="absolute inset-0 bg-gradient-to-br from-[--color-primary] via-[--color-primary]/90 to-[--color-secondary]"></div>
+    {% endif %}
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                {{ value.titre }}
+            </h1>
+            {% if value.sous_titre %}
+            <p class="text-lg sm:text-xl text-white/90 mb-10 leading-relaxed max-w-2xl">{{ value.sous_titre }}</p>
+            {% endif %}
+            
+            {% if value.boutons %}
+            <div class="flex flex-wrap gap-4">
+                {% for bouton in value.boutons %}
+                <a href="{% if bouton.page %}{% pageurl bouton.page %}{% else %}{{ bouton.url_externe }}{% endif %}"
+                   class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-lg transition transform hover:-translate-y-0.5
+                          {% if bouton.style == 'primary' %}bg-[--color-accent] text-gray-900 hover:bg-[--color-accent]/90 shadow-xl
+                          {% elif bouton.style == 'secondary' %}bg-white text-[--color-primary] hover:bg-gray-50 shadow-xl
+                          {% elif bouton.style == 'outline' %}border-2 border-white text-white hover:bg-white hover:text-gray-900
+                          {% else %}bg-white/20 backdrop-blur-sm text-white hover:bg-white/30{% endif %}">
+                    {{ bouton.texte }}
+                    <i class="fas fa-arrow-right text-sm"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Decorative wave -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f9fafb"/>
+        </svg>
+    </div>
+</section>
